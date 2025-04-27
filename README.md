@@ -4,7 +4,7 @@ It makes tracking fast and rewarding by learning from your habits: previously ad
 Each day, MacroQuest automatically evaluates whether you hit your nutritional targets and rewards you with "streaks" or "achievements" when you maintain consistency over time.
 The project focuses on simplicity, speed, and habit building, rather than overwhelming you with unnecessary features.
 
-Key Features
+_Key Features_
 🚀 Fast Logging: Save common foods and meals to speed up daily tracking.
 
 🏆 Daily Goals and Streaks: Track if you met your macronutrient goals each day and build winning streaks.
