@@ -1,14 +1,44 @@
-import sqlite3 as sql
+import sqlite3
 
-DB_PATH = 'macro_logger.db'
+import os
+# Ensure the DB folder exists
 
-con = sql.connect(DB_PATH)
-cur = con.cursor()
-cur.execute('''
-            CREATE TABLE IF NOT EXISTS nutritions_100g
-            (food_name text PRIMARY KEY, calories number, protein number,fat number, carbs number)
-            ''')
+os.makedirs("DB", exist_ok=True)
+conn = sqlite3.connect("DB/macroquest.db")
+c = conn.cursor()
 
-cur.execute('''INSERT OR IGNORE INTO nutritions_100g VALUES ('cooked_rice','130','2.7','0.3', '28')''')
+c.execute("""
+CREATE TABLE IF NOT EXISTS foods (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE,
+    calories REAL,
+    protein REAL,
+    carbs REAL,
+    fat REAL,
+    unit TEXT
+)
+""")
 
-con.commit()
+c.execute("""
+CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT,
+    food_id INTEGER,
+    quantity REAL,
+    FOREIGN KEY(food_id) REFERENCES foods(id)
+)
+""")
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS daily_summary (
+    date TEXT PRIMARY KEY,
+    total_cal REAL,
+    total_protein REAL,
+    total_carbs REAL,
+    total_fat REAL,
+    goal_met INTEGER
+)
+""")
+
+conn.commit()
+conn.close()
