@@ -1,0 +1,12 @@
+usage: meal_tracking.py [-h] [-v] -g GOALS_PATH -m MEALS_PATH
+
+Calculates the total nutrition consumed from meals and how much is left for
+the day based on your nutrition goals.
+
+required arguments:
+  -g, --goals     Path to a file containing nutrition goals (JSON or Excel).
+  -m, --meals     Path to a file containing meals eaten today (JSON or Excel).
+
+optional arguments:
+  -h, --help      Show this help message and exit.
+  -v, --verbosity Increase output verbosity for debugging or detailed logs.

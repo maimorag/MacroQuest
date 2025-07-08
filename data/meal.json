@@ -1,0 +1,14 @@
+{
+  "Egg": {
+    "quantity": 2,
+    "unit": "1 egg"
+  },
+  "celery": {
+    "quantity": 1,
+    "unit": "1 unit"
+  },
+  "cucumber": {
+    "quantity": 2,
+    "unit": "1 unit"
+  }
+}
