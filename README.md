@@ -1,18 +1,26 @@
+# MacroQuest 🍽️
+
 MacroQuest is a smart, personal nutrition tracker designed to help users log daily meals, monitor macronutrient intake (calories, protein, fats, carbs), and stay consistent with their health goals.
+
 It makes tracking fast and rewarding by learning from your habits: previously added meals and ingredients are saved for quick future entries.
 
-Each day, MacroQuest automatically evaluates whether you hit your nutritional targets and rewards you with "streaks" or "achievements" when you maintain consistency over time.
-The project focuses on simplicity, speed, and habit building, rather than overwhelming you with unnecessary features.
+---
 
-_Key Features_
-🚀 Fast Logging: Save common foods and meals to speed up daily tracking.
+## ✨ Features
 
-🏆 Daily Goals and Streaks: Track if you met your macronutrient goals each day and build winning streaks.
+- 🚀 **Fast Logging**: Save common foods and meals to speed up daily tracking.
+- 🏆 **Daily Goals & Streaks**: Track if you met your macronutrient goals each day and build streaks.
+- 📈 **Progress Dashboard**: Review your nutrition history and patterns over time.
+- 🧠 **Future Plan**: Smart meal suggestions based on your eating patterns.
+- 📄 **Local Logs**: All data stored locally in SQLite (`macroquest.db`) for privacy and performance.
+- 🌟 **Expandable**: Easily extend with badges, reminders, charts.
 
-📈 Progress Dashboard: See your nutrition history and patterns over time.
+---
 
-🧠 Smart Suggestions (Future Plan): Based on your eating patterns, the app can suggest meals that help you stay on track.
+## 📦 Installation
 
-📄 Local Daily Logs: Data is stored locally for privacy and performance.
-
-🌟 Expandable: Designed to be easily extended later (badges, reminders, charts).
+```bash
+git clone https://github.com/yourname/macroquest.git
+cd macroquest
+pip install -r requirements.txt
+```

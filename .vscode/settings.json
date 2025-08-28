@@ -1,0 +1,3 @@
+{
+  "python.analysis.extraPaths": ["./fdc_client"]
+}
