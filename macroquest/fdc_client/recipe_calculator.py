@@ -1,5 +1,6 @@
-from .common import logger, Dict, Nutrition
-from .client import FoodDataCentralClient
+from macroquest.fdc_client.client import FoodDataCentralClient
+from macroquest.fdc_client.common import Nutrition, logger
+
 
 
 class RecipeCalculator:

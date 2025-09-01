@@ -24,3 +24,11 @@ git clone https://github.com/yourname/macroquest.git
 cd macroquest
 pip install -r requirements.txt
 ```
+
+### Show Meals for a Specific Date
+
+You can view all meals logged on a specific date using the `--date` option:
+
+```bash
+python -m macroquest.cli.meal_tracking --date 2025-09-01
+```

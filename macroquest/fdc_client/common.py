@@ -2,6 +2,7 @@ import logging
 import os
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel
+from datetime import datetime
 
 # -------- Global Constants -------- #
 BASE_URL = "https://api.nal.usda.gov/fdc"
@@ -40,6 +41,12 @@ class Nutrition(BaseModel):
             carbohydrates=self.carbohydrates * factor,
         )
 
+class Meal(BaseModel):
+    name: str
+    grams: float
+    nutrition: Nutrition
+    timestamp: datetime
+
 __all__ = [
     "BASE_URL",
     "API_KEY_REQUEST_URL",
@@ -50,4 +57,5 @@ __all__ = [
     "Optional",
     "Any",
     "Nutrition",
+    "Meal",
 ]
