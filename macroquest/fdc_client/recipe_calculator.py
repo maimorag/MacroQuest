@@ -1,13 +1,32 @@
 from macroquest.fdc_client.client import FoodDataCentralClient
-from macroquest.fdc_client.common import Nutrition, logger
+from macroquest.fdc_client.common import Nutrition, logger, Dict
 
 
 
 class RecipeCalculator:
+    """
+    Helper class to calculate nutrition for recipes based on USDA FoodDataCentral API.
+    """
     def __init__(self, client: FoodDataCentralClient):
+        """
+        Initialize the calculator.
+
+        Args:
+            client (FoodDataCentralClient): API client to fetch food data.
+        """
         self.client = client
 
     def get_recipe_nutrition(self, ingredients: Dict[str, float], servings: int = 1) -> Nutrition:
+        """
+        Compute nutrition totals for a recipe.
+
+        Args:
+            ingredients (dict[str, float]): Dictionary mapping ingredient name to grams.
+            servings (int): Number of servings to divide totals into.
+
+        Returns:
+            Nutrition: Aggregated nutrition for the recipe.
+        """
         total = Nutrition()
 
         for ingredient, grams in ingredients.items():

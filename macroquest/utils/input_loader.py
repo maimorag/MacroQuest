@@ -1,9 +1,18 @@
 import json
 from pathlib import Path
-from macroquest.fdc_client import Nutrition, logger
+from macroquest.fdc_client.common import Nutrition, logger
 
 
 def read_json(path: Path):
+    """
+    Read a JSON file and return its contents.
+
+    Args:
+        path (Path): Path to the JSON file.
+
+    Returns:
+        dict: Parsed JSON data.
+    """
     try:
         with open(path, "r") as file:
             data = json.load(file)
@@ -15,6 +24,15 @@ def read_json(path: Path):
 
 
 def read_excel(path: Path):
+    """
+    Load daily nutrition goals from a JSON/Excel file or prompt interactively.
+
+    Args:
+        path (Path | None): Path to file, or None for interactive mode.
+
+    Returns:
+        Nutrition: Daily nutrition goals.
+    """
     try:
         import openpyxl
         wb = openpyxl.load_workbook(path)

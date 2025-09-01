@@ -19,6 +19,7 @@ _handler.setFormatter(_formatter)
 logger.addHandler(_handler)
 
 # -------- Data Models -------- #
+
 class Nutrition(BaseModel):
     calories: float = 0.0
     protein: float = 0.0
@@ -40,6 +41,13 @@ class Nutrition(BaseModel):
             fat=self.fat * factor,
             carbohydrates=self.carbohydrates * factor,
         )
+
+    def model_post_init(self, __context):
+        # Round all floats to 2 decimals
+        self.calories = round(self.calories, 2)
+        self.protein = round(self.protein, 2)
+        self.fat = round(self.fat, 2)
+        self.carbohydrates = round(self.carbohydrates, 2)
 
 class Meal(BaseModel):
     name: str

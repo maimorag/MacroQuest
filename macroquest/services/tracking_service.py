@@ -7,15 +7,46 @@ from macroquest.fdc_client.common import Nutrition, logger
 from macroquest.db.db_manager import insert_meal, fetch_all_meals
 
 
-def calc_nutritions(meals: dict[str, float], goals: Nutrition) -> dict[str, Nutrition]:
+
+
+def calc_nutritions(meals: dict[str, float], goals: Nutrition, skip_db: bool = False) -> dict[str, Nutrition]:
+    """
+    Calculate nutrition consumption compared to daily goals.
+
+    Args:
+        meals (dict[str, float]): Mapping of food items to gram amounts.
+        goals (Nutrition): User's daily nutrition goals.
+        skip_db (bool): If True, do not insert meals into the database.
+
+    Returns:
+        dict[str, Nutrition]: Consumed, remaining, and goal nutrition values.
+    """
     client = FoodDataCentralClient()
     calculator = RecipeCalculator(client)
 
     consumed = calculator.get_recipe_nutrition(meals)
 
-    # Save each meal in DB
-    for name, grams in meals.items():
-        insert_meal(name, grams, calculator.get_recipe_nutrition({name: grams}))
+    if not skip_db:
+        # Save each meal in DB only if lookup succeeds
+        for name, grams in meals.items():
+            try:
+                single_nutrition = calculator.get_recipe_nutrition({name: grams})
+                if (
+                    single_nutrition is None
+                    or single_nutrition.calories == 0
+                    and single_nutrition.protein == 0
+                    and single_nutrition.fat == 0
+                    and single_nutrition.carbohydrates == 0
+                ):
+                    logger.warning(f"Skipping DB insert for '{name}' (no nutrition data).")
+                    continue
+
+                insert_meal(name, grams, single_nutrition)
+            except Exception as e:
+                logger.error(f"Skipping DB insert for '{name}' due to error: {e}")
+                continue
+    else:
+        logger.info("Skipping DB inserts (--skip-db enabled).")
 
     left = Nutrition(
         calories=goals.calories - consumed.calories,
@@ -27,7 +58,15 @@ def calc_nutritions(meals: dict[str, float], goals: Nutrition) -> dict[str, Nutr
     return {"consumed": consumed, "left": left, "goals": goals}
 
 
+
 def export_excel(results: dict[str, Nutrition], path="nutrition_summary.xlsx"):
+    """
+    Export nutrition summary results into an Excel file.
+
+    Args:
+        results (dict[str, Nutrition]): Dictionary containing consumed, left, and goals.
+        path (str): Output path for the Excel file.
+    """
     try:
         import openpyxl
         wb = openpyxl.Workbook()
@@ -50,7 +89,12 @@ def export_excel(results: dict[str, Nutrition], path="nutrition_summary.xlsx"):
 
 
 def aggregate_daily_totals() -> dict[str, Nutrition]:
-    """Aggregate all meals in the DB into daily totals."""
+    """
+    Aggregate all meals stored in the database into daily totals.
+
+    Returns:
+        dict[str, Nutrition]: Mapping from date (YYYY-MM-DD) to total nutrition.
+    """
     rows = fetch_all_meals()
     if not rows:
         return {}

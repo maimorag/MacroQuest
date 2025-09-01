@@ -8,7 +8,7 @@ DB_PATH = Path(__file__).resolve().parent / "macroquest.db"
 
 
 def init_db():
-    """Initialize the meals table if it does not exist."""
+    """Initialize the SQLite database and create the `meals` table if it does not exist."""
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute(
@@ -29,7 +29,14 @@ def init_db():
 
 
 def insert_meal(name: str, grams: float, nutrition: Nutrition) -> None:
-    """Insert a meal into the database with a timestamp."""
+    """
+    Insert a meal into the database with a timestamp.
+
+    Args:
+        name (str): Food name.
+        grams (float): Weight of the meal in grams.
+        nutrition (Nutrition): Nutrition breakdown for the meal.
+    """
     try:
         ts = datetime.now().isoformat(timespec="seconds")
         with sqlite3.connect(DB_PATH) as conn:
@@ -56,7 +63,12 @@ def insert_meal(name: str, grams: float, nutrition: Nutrition) -> None:
 
 
 def fetch_all_meals():
-    """Fetch all meals from the database."""
+    """
+    Fetch all stored meals from the database.
+
+    Returns:
+        list[tuple]: A list of tuples containing meal records.
+    """
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
@@ -76,8 +88,13 @@ def fetch_all_meals():
 
 def fetch_meals_by_date(date: str):
     """
-    Fetch meals for a specific date (YYYY-MM-DD).
-    Example: fetch_meals_by_date("2025-09-01")
+    Fetch meals for a specific date.
+
+    Args:
+        date (str): Date in format YYYY-MM-DD.
+
+    Returns:
+        list[tuple]: A list of meals consumed on the given date.
     """
     try:
         with sqlite3.connect(DB_PATH) as conn:
