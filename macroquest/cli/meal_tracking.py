@@ -22,13 +22,29 @@ def parse_args():
         description="Calculate consumed nutrition vs daily goals.",
         usage="meal_tracking.py [-h] [-g GOALS_PATH] [-m MEALS_PATH] [-e] [--history] [--daily]",
     )
-    parser.add_argument("-g", "--goals", type=Path, help="Path to goals JSON/Excel file.")
-    parser.add_argument("-m", "--meals", type=Path, help="Path to meals JSON/Excel file.")
-    parser.add_argument("-e", "--create-excel", action="store_true", help="Export results to Excel.")
-    parser.add_argument("--history", action="store_true", help="Show meal history from the database.")
-    parser.add_argument("--daily", action="store_true", help="Show daily aggregated nutrition totals.")
-    parser.add_argument("--date", type=str, help="Show meals only for a specific date (YYYY-MM-DD).")
-    parser.add_argument("--skip-db", action="store_true", help="Skip saving meals into the local database.")
+    parser.add_argument(
+        "-g", "--goals", type=Path, help="Path to goals JSON/Excel file."
+    )
+    parser.add_argument(
+        "-m", "--meals", type=Path, help="Path to meals JSON/Excel file."
+    )
+    parser.add_argument(
+        "-e", "--create-excel", action="store_true", help="Export results to Excel."
+    )
+    parser.add_argument(
+        "--history", action="store_true", help="Show meal history from the database."
+    )
+    parser.add_argument(
+        "--daily", action="store_true", help="Show daily aggregated nutrition totals."
+    )
+    parser.add_argument(
+        "--date", type=str, help="Show meals only for a specific date (YYYY-MM-DD)."
+    )
+    parser.add_argument(
+        "--skip-db",
+        action="store_true",
+        help="Skip saving meals into the local database.",
+    )
     return parser.parse_args()
 
 

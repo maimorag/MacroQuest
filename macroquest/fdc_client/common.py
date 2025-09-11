@@ -20,6 +20,7 @@ logger.addHandler(_handler)
 
 # -------- Data Models -------- #
 
+
 class Nutrition(BaseModel):
     calories: float = 0.0
     protein: float = 0.0
@@ -49,11 +50,13 @@ class Nutrition(BaseModel):
         self.fat = round(self.fat, 2)
         self.carbohydrates = round(self.carbohydrates, 2)
 
+
 class Meal(BaseModel):
     name: str
     grams: float
     nutrition: Nutrition
     timestamp: datetime
+
 
 __all__ = [
     "BASE_URL",

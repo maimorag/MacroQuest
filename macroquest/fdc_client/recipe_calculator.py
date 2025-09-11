@@ -2,11 +2,11 @@ from macroquest.fdc_client.client import FoodDataCentralClient
 from macroquest.fdc_client.common import Nutrition, logger, Dict
 
 
-
 class RecipeCalculator:
     """
     Helper class to calculate nutrition for recipes based on USDA FoodDataCentral API.
     """
+
     def __init__(self, client: FoodDataCentralClient):
         """
         Initialize the calculator.
@@ -16,7 +16,9 @@ class RecipeCalculator:
         """
         self.client = client
 
-    def get_recipe_nutrition(self, ingredients: Dict[str, float], servings: int = 1) -> Nutrition:
+    def get_recipe_nutrition(
+        self, ingredients: Dict[str, float], servings: int = 1
+    ) -> Nutrition:
         """
         Compute nutrition totals for a recipe.
 
@@ -42,7 +44,11 @@ class RecipeCalculator:
 
                 serving_size = details.get("servingSize")
                 serving_unit = details.get("servingSizeUnit", "").lower()
-                factor = grams / float(serving_size) if serving_size and serving_unit == "g" else grams / 100.0
+                factor = (
+                    grams / float(serving_size)
+                    if serving_size and serving_unit == "g"
+                    else grams / 100.0
+                )
 
                 total = total + nutrition.scale(factor)
 

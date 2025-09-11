@@ -4,13 +4,22 @@ import os
 import webbrowser
 
 from .common import (
-    BASE_URL, API_KEY_REQUEST_URL, DEFAULT_CONFIG_FILE,
-    logger, List, Dict, Optional, Any, Nutrition
+    BASE_URL,
+    API_KEY_REQUEST_URL,
+    DEFAULT_CONFIG_FILE,
+    logger,
+    List,
+    Dict,
+    Optional,
+    Any,
+    Nutrition,
 )
 
 
 class FoodDataCentralClient:
-    def __init__(self, api_key: Optional[str] = None, config_path: Optional[str] = None):
+    def __init__(
+        self, api_key: Optional[str] = None, config_path: Optional[str] = None
+    ):
         self.config_path = config_path or DEFAULT_CONFIG_FILE
 
         if api_key:
@@ -21,7 +30,9 @@ class FoodDataCentralClient:
             if self.api_key:
                 logger.info(f"Initialized with API key from {self.config_path}.")
             else:
-                logger.warning("No API key found. Use create_api_key() and save_api_key().")
+                logger.warning(
+                    "No API key found. Use create_api_key() and save_api_key()."
+                )
 
     def _load_api_key(self) -> Optional[str]:
         if os.path.exists(self.config_path):
@@ -72,13 +83,17 @@ class FoodDataCentralClient:
         response.raise_for_status()
         return response.json()
 
-    def get_food(self, fdc_id: str, format: str = "full", nutrients: Optional[List[int]] = None) -> Dict[str, Any]:
+    def get_food(
+        self, fdc_id: str, format: str = "full", nutrients: Optional[List[int]] = None
+    ) -> Dict[str, Any]:
         params = {"format": format}
         if nutrients:
             params["nutrients"] = ",".join(map(str, nutrients))
         return self._get(f"/v1/food/{fdc_id}", params)
 
-    def search_foods(self, query: str, page_size: int = 50, page_number: int = 1) -> Dict[str, Any]:
+    def search_foods(
+        self, query: str, page_size: int = 50, page_number: int = 1
+    ) -> Dict[str, Any]:
         params = {"query": query, "pageSize": page_size, "pageNumber": page_number}
         return self._get("/v1/foods/search", params)
 

@@ -7,9 +7,9 @@ from macroquest.fdc_client.common import Nutrition, logger
 from macroquest.db.db_manager import insert_meal, fetch_all_meals
 
 
-
-
-def calc_nutritions(meals: dict[str, float], goals: Nutrition, skip_db: bool = False) -> dict[str, Nutrition]:
+def calc_nutritions(
+    meals: dict[str, float], goals: Nutrition, skip_db: bool = False
+) -> dict[str, Nutrition]:
     """
     Calculate nutrition consumption compared to daily goals.
 
@@ -38,7 +38,9 @@ def calc_nutritions(meals: dict[str, float], goals: Nutrition, skip_db: bool = F
                     and single_nutrition.fat == 0
                     and single_nutrition.carbohydrates == 0
                 ):
-                    logger.warning(f"Skipping DB insert for '{name}' (no nutrition data).")
+                    logger.warning(
+                        f"Skipping DB insert for '{name}' (no nutrition data)."
+                    )
                     continue
 
                 insert_meal(name, grams, single_nutrition)
@@ -58,7 +60,6 @@ def calc_nutritions(meals: dict[str, float], goals: Nutrition, skip_db: bool = F
     return {"consumed": consumed, "left": left, "goals": goals}
 
 
-
 def export_excel(results: dict[str, Nutrition], path="nutrition_summary.xlsx"):
     """
     Export nutrition summary results into an Excel file.
@@ -69,18 +70,21 @@ def export_excel(results: dict[str, Nutrition], path="nutrition_summary.xlsx"):
     """
     try:
         import openpyxl
+
         wb = openpyxl.Workbook()
         ws = wb.active
         ws.title = "Nutrition Summary"
 
         ws.append(["Metric", "Consumed", "Left", "Goal"])
         for metric in ["calories", "protein", "fat", "carbohydrates"]:
-            ws.append([
-                metric.capitalize(),
-                getattr(results["consumed"], metric),
-                getattr(results["left"], metric),
-                getattr(results["goals"], metric),
-            ])
+            ws.append(
+                [
+                    metric.capitalize(),
+                    getattr(results["consumed"], metric),
+                    getattr(results["left"], metric),
+                    getattr(results["goals"], metric),
+                ]
+            )
 
         wb.save(path)
         logger.info(f"Excel file saved at {path}")

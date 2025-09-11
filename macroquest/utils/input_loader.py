@@ -35,6 +35,7 @@ def read_excel(path: Path):
     """
     try:
         import openpyxl
+
         wb = openpyxl.load_workbook(path)
         ws = wb.active
         data = {}
@@ -54,7 +55,7 @@ def ask_interactive_goals() -> Nutrition:
         calories=float(input("Calories: ")),
         protein=float(input("Protein (g): ")),
         fat=float(input("Fat (g): ")),
-        carbohydrates=float(input("Carbohydrates (g): "))
+        carbohydrates=float(input("Carbohydrates (g): ")),
     )
 
 
