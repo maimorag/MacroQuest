@@ -1,0 +1,17 @@
+usage: meal_tracking.py [-h] [-g GOALS_PATH] [-m MEALS_PATH] [-e] [--history] [--daily] [--skip-db]
+
+Calculates the total nutrition consumed from meals and how much is left for
+the day based on your nutrition goals.
+
+optional arguments:
+  -h, --help        Show this help message and exit.
+  -g, --goals       Path to a file containing nutrition goals (JSON or Excel).
+                    If not provided, you will be prompted interactively.
+  -m, --meals       Path to a file containing meals eaten today (JSON or Excel).
+                    If not provided, you will be prompted interactively.
+  -e, --create-excel
+                    Export results to an Excel file (nutrition_summary.xlsx).
+  --history         Show meal history stored in the local database.
+  --daily           Show daily aggregated nutrition totals instead of raw meals
+                    (used together with --history).
+  --skip-db         Skip saving meals into the local database (calculation only).

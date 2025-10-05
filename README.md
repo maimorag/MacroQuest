@@ -1,20 +1,113 @@
-# MacroQuest
+# MacroQuest 🍽️
 
-MacroQuest is a smart, personal nutrition tracker designed to help users log daily meals, monitor macronutrient intake (calories, protein, fats, carbs), and stay consistent with their health goals.
-It makes tracking fast and rewarding by learning from your habits: previously added meals and ingredients are saved for quick future entries.
+_A personal nutrition tracker with smart meal logging and macronutrient insights._
 
-Each day, MacroQuest automatically evaluates whether you hit your nutritional targets and rewards you with "streaks" or "achievements" when you maintain consistency over time.
-The project focuses on simplicity, speed, and habit building, rather than overwhelming you with unnecessary features.
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success)
 
-## *Key Features*
-🚀 Fast Logging: Save common foods and meals to speed up daily tracking.
+---
 
-🏆 Daily Goals and Streaks: Track if you met your macronutrient goals each day and build winning streaks.
+## 🌟 About
 
-📈 Progress Dashboard: See your nutrition history and patterns over time.
+MacroQuest is a CLI-based nutrition tracker designed to help users log meals, calculate consumed macronutrients (calories, protein, fat, carbohydrates), and compare them against daily goals.  
+It keeps a local history in SQLite and supports both **interactive entry** and **JSON/Excel input**.
 
-🧠 Smart Suggestions (Future Plan): Based on your eating patterns, the app can suggest meals that help you stay on track.
+---
 
-📄 Local Daily Logs: Data is stored locally for privacy and performance.
+## ✨ Features
 
-🌟 Expandable: Designed to be easily extended later (badges, reminders, charts).
+- 🚀 **Fast Logging**: Enter meals via JSON, Excel, or interactively.
+- 🏆 **Daily Goals**: Track calories, protein, fats, and carbs.
+- 📈 **History Tracking**: Query your nutrition log by date or show daily totals.
+- 💾 **SQLite Database**: Meals are stored locally (`macroquest.db`) for privacy.
+- 📄 **Excel Export**: Save summaries as `nutrition_summary.xlsx`.
+- 🔧 **Extensible**: Modular design with `services`, `utils`, `db`.
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/yourname/macroquest.git
+cd macroquest
+pip install -r requirements.txt
+```
+
+## ⚡ Usage
+
+#### Run MacroQuest directly as a Python module
+
+```bash
+python -m macroquest.cli.meal_tracking [options]
+```
+
+#### Track today’s meals vs. goals
+
+```bash
+python -m macroquest.cli.meal_tracking -g examples/nutritions_goals.json -m examples/meals.json
+```
+
+#### Show meal history (all entries in the database)
+
+```bash
+python -m macroquest.cli.meal_tracking --history
+```
+
+#### Show daily aggregated nutrition totals
+
+```bash
+python -m macroquest.cli.meal_tracking --history --daily
+```
+
+#### Show meals for a specific date
+
+```bash
+python -m macroquest.cli.meal_tracking --date 2025-09-01
+```
+
+#### Skip saving meals to the database (for testing purposes)
+
+```bash
+python -m macroquest.cli.meal_tracking -g examples/nutritions_goals.json -m examples/meals.json --skip-db
+```
+
+#### Export results to Excel
+
+```bash
+python -m macroquest.cli.meal_tracking -g examples/nutritions_goals.json -m examples/meals.json --create-excel
+```
+
+### Example Output
+
+```bash
+=== Nutrition Summary ===
+Consumed:
+{
+  "calories": 542.81,
+  "protein": 39.18,
+  "fat": 17.01,
+  "carbohydrates": 57.57
+}
+Remaining:
+{
+  "calories": 1457.19,
+  "protein": 110.82,
+  "fat": 52.99,
+  "carbohydrates": 192.43
+}
+```
+
+## 🔮 Future Improvements
+
+Web dashboard with charts.
+
+Streaks & achievements.
+
+Barcode scanner for quick food logging.
+
+API integration with fitness apps.
+
+## 📜 License
+
+This project is licensed under the MIT License – see the [LICENSE](macroquest\LICENSE) file for details.

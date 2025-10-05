@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "macroquest"
+version = "0.1.0"
+description = "Smart nutrition tracker with FoodData Central integration"
+authors = [
+    { name="May Morag", email="your@email.com" }
+]
+dependencies = [
+    "requests",
+    "pydantic",
+    "openpyxl"
+]
+requires-python = ">=3.9"
+
+[project.scripts]
+macroquest = "macroquest.cli.meal_tracking:main"
